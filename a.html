@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyBbCMKkawXpCmlT_SqQS1bYskPXHkqcSTo",
+      authDomain: "black-liste.firebaseapp.com",
+      databaseURL: "https://black-liste.firebaseio.com",
+      projectId: "black-liste",
+      storageBucket: "black-liste.appspot.com",
+      messagingSenderId: "33482074021"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<body>
+  <input id="cin" type="text" name="cin" value="">
+  <button id="search" type="button" name="button">search</button>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script>
+    $("#search").click(function() {
+      var item = document.getElementById('cin').value;
+      var database = firebase.database().ref("location");
+
+      // Find all dinosaurs whose height is exactly 25 meters.
+      database.orderByChild("cin").equalTo(item).on("value", function(snapshot) {
+        if (snapshot.exists()) {
+          snapshot.forEach(function(data) {
+            var val = data.val();
+            alert(val.nom +" "+ val.prenom + " il est dans la black list "+"\n"+'CIN : '+val.cin +"\n"
+            +"Date : "+val.date+"\n"
+            +"motif : "+val.motif+"\n"
+            +"Nom : "+val.nom+"\n"
+            +"Prenom : "+val.prenom+"\n"
+            +"ville : "+val.ville+"\n");
+
+          });
+        } else {
+          alert(item + ' il est pas dans la black list');
+        }
+
+      });
+
+    });
+  </script>
+</body>
+
+</html>
